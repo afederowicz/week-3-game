@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Homework 3</title>
+  </head>
+
+  <body>
+  	<div id="game">
+  		<h1>The Psychic Game</h1>
+  		<p>Guess the random letter I'm thinking of. Press a letter to play!</p>
+  		<div id="results">
+  		</div>
+	</div>
+
+	<script type="text/javascript">
+
+		//array of possible letter choices
+		var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+		//variables for wins/losses/guesses remaining/guesses
+		var wins = 0;
+		var losses = 0;
+		var numGuess = 9;
+		var guesses = [];
+		var display = document.querySelector("#results");
+
+		function results(){
+			var string = "<p>Wins: " + wins + "</p>";
+			string += "<p>Losses: " + losses + "</p>";
+			string += "<p>Guesses remaining: " + numGuess + "</p>";
+			string += "<p>You have guessed: " + guesses + "</p>";
+			display.innerHTML = string;
+		}
+
+
+		var chosenLetter = options[Math.floor(Math.random() * options.length)];
+
+		//when key pressed, contained function runs
+		document.onkeyup = function(event) {
+
+			var key = event.key;
+			
+			if (key == chosenLetter) {
+				wins++;
+				guesses = [];
+				numGuess = 9;
+				results();
+				chosenLetter = options[Math.floor(Math.random() * options.length)];
+			}
+
+
+			else if (key != chosenLetter) {
+				if (guesses.length == 9) {
+					losses++;
+					numGuess = 9;
+					guesses = [""];
+					chosenLetter = options[Math.floor(Math.random() * options.length)];
+					results();
+				}
+				else if (guesses.length < 9) {
+					guesses.push(key);
+					numGuess--;
+					results();
+				}
+
+			}
+
+			
+		};
+	</script>
+</body>
+</html>
